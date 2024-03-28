@@ -24,7 +24,7 @@
   Copyright = '(c) Daniel Schroeder. All rights reserved.'
 
   # Description of the functionality provided by this module
-  # Description = ''
+  Description = "Dump all of an object's properties, fields, and non-public members to the console in a nice structured and colourful way."
 
   # Minimum version of the PowerShell engine required by this module
   # PowerShellVersion = ''
@@ -94,16 +94,16 @@
       # Tags = @()
 
       # A URL to the license for this module.
-      # LicenseUri = ''
+      LicenseUri = 'https://github.com/deadlydog/PowerShell.dumPS/blob/main/License.md'
 
       # A URL to the main website for this project.
-      # ProjectUri = ''
+      ProjectUri = 'https://github.com/deadlydog/PowerShell.dumPS'
 
       # A URL to an icon representing this module.
       # IconUri = ''
 
       # ReleaseNotes of this module
-      # ReleaseNotes = ''
+      ReleaseNotes = 'https://github.com/deadlydog/PowerShell.dumPS/blob/main/Changelog.md'
 
       # Prerelease string of this module
       # Prerelease = ''
