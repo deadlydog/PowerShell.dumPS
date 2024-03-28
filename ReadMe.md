@@ -1,140 +1,165 @@
-🚧 This repo is still a work in progress and not yet ready to be used 🚧
+# Finish setting up your repo
 
-<p align="center">
-  <a href="https://github.com/deadlydog/PowerShell.ScriptModuleRepositoryTemplate/actions/workflows/build-and-test-powershell-module.yml"><img alt="Build status" src="https://github.com/deadlydog/PowerShell.ScriptModuleRepositoryTemplate/actions/workflows/build-and-test-powershell-module.yml/badge.svg"></a>
-  <a href="https://github.com/deadlydog/PowerShell.ScriptModuleRepositoryTemplate/actions/workflows/build-test-and-deploy-powershell-module.yml"><img alt="Deploy status" src="https://github.com/deadlydog/PowerShell.ScriptModuleRepositoryTemplate/actions/workflows/build-test-and-deploy-powershell-module.yml/badge.svg"></a>
-  <a href="https://github.com/deadlydog/PowerShell.ScriptModuleRepositoryTemplate/blob/main/License.md"><img alt="License" src="https://img.shields.io/github/license/deadlydog/PowerShell.ScriptModuleRepositoryTemplate.svg"></a>
-  <a href="https://github.com/deadlydog/PowerShell.ScriptModuleRepositoryTemplate/blob/main/docs/Contributing.md"><img alt="PRs welcome" src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg"></a>
-</p>
+> [!IMPORTANT]
+> Congratulations on initializing your repository! 🎉
+>
+> 🚧 You are not quite done yet though. 🚧
+>
+> Complete the following steps to finish setting up your repository.
 
-<p align="center">
-  <a href="https://www.powershellgallery.com/packages/ScriptModuleRepositoryTemplate"><img alt="Stable PowerShell module version" src="https://img.shields.io/powershellgallery/v/ScriptModuleRepositoryTemplate.svg"></a>
-  <a href="https://www.powershellgallery.com/packages/ScriptModuleRepositoryTemplate"><img alt="Prerelease PowerShell module version" src="https://img.shields.io/powershellgallery/vpre/ScriptModuleRepositoryTemplate.svg?include_prereleases&label=powershell%20gallery%20prerelease&colorB=yellow"></a>
-  <a href="https://www.powershellgallery.com/packages/ScriptModuleRepositoryTemplate"><img src="https://img.shields.io/powershellgallery/dt/ScriptModuleRepositoryTemplate.svg"></a>
-</p>
+## 📄 Template setup instructions
 
-<p align="center">
-  <img src="https://img.shields.io/powershellgallery/p/ScriptModuleRepositoryTemplate.svg">
-  <img src="https://img.shields.io/github/languages/top/deadlydog/PowerShell.ScriptModuleRepositoryTemplate.svg">
-  <img src="https://img.shields.io/github/languages/code-size/deadlydog/PowerShell.ScriptModuleRepositoryTemplate.svg">
-</p>
+Steps 1 and 2 were already performed to get this far.
 
-# PowerShell Script Module Repository Template
+### ➕ Step 3: Add your module (if applicable)
 
-A template repository and module for creating new PowerShell module repos quickly with boilerplate files and CI/CD workflows already defined.
+If you already have the module, manifest, and tests written, replace the following files with your module's files:
+
+- [dumPS.psm1](/src/dumPS/dumPS.psm1)
+- [dumPS.psd1](/src/dumPS/dumPS.psd1)
+- [dumPS.Tests.ps1](/src/dumPS/dumPS.Tests.ps1)
+
+Otherwise, use these files as a starting point for your new module.
+
+### 🚀 Step 4: Update your CI/CD workflows
+
+#### 🔑 Create a PowerShell Gallery API Key
+
+In order to publish the module to the gallery, you need to get an API key.
+If you already have an API key that you want to use, you can skip to the next step.
+
+> [!CAUTION]
+> It is considered best practice to use a different API key for each module you publish.
+> It reduces the impact scope if one of the API keys becomes compromised.
+
+If you will be publishing the module to a custom PowerShell Gallery feed, you will need to get an API key for that feed. Otherwise, follow the steps below.
+
+<details>
+<summary>Click to view steps to create a new API Key for the PowerShell Gallery...</summary>
+
+1. Navigate to <https://www.powershellgallery.com/account/apikeys>, and login if necessary.
+1. Click `Create` to create a new API key for this module.
+1. For the `Key Name` it is a good idea to include the name of your module.
+   e.g. `dumPS module CI/CD pipeline`
+1. Ensure the `Push new packages and package versions` scope is selected.
+1. For the `Glob Pattern` enter the name of your module: `dumPS`
+1. Click the `Create` button to create the API key.
+1. Click the `Copy` button on the new API key to copy it to your clipboard, as you will need it for the next section.
+
+You may want to leave this page open in your browser until you have the API key saved in your repository secrets in the next section.
+
+</details>
+
+#### ▶ GitHub Actions and Azure DevOps Pipelines setup instructions
+
+Building and publishing the PowerShell module using GitHub Actions and Azure DevOps Pipelines are both supported.
+Follow the instructions for the CI/CD platform you plan to use.
+
+<details>
+<summary>Click to see GitHub setup instructions...</summary>
+
+If using GitHub Actions for your CI/CD workflows, perform the following steps to setup your API key as a repository secret:
+
+1. Navigate to your GitHub repository in your browser.
+1. Go to the `Settings` tab for your repository.
+1. In the left-hand menu, in the `Security` section, click on `Secrets and variables` and select `Actions`.
+1. In the `Secrets` tab click the `New repository secret` button.
+1. Set the `Name` to: `POWERSHELL_GALLERY_API_KEY`
+1. Set the `Secret` to the API key value that you copied in the previous section.
+
+If you do not provide a valid API key, you will get an error like the following in the `Publish prerelease PowerShell module` step of the deployment workflow:
+
+```text
+Failed to publish module '<module name>': 'dotnet cli failed to nuget push Pushing <module name>.nupkg to '<url>'...
+PUT <url> Forbidden
+error: Response status code does not indicate success: 403 (The specified API key is invalid, has expired, or does not have permission to access the specified package.).
+```
+
+Next we want to create an Environment so that stable module versions require manual approval before being published to the gallery:
+
+1. You should still be in the `Settings` section of your repository.
+1. In the left-hand menu, in the `Environments` section, click on `Environments`.
+1. Click the `New environment` button.
+1. Set the `Name` to (all lowercase): `production`
+1. Click the `Configure environment` button.
+1. Check the `Required reviewers` checkbox and add the usernames of the people allowed to approve new stable version deployments.
+1. Click the `Save protection rules` button.
+
+If your GitHub account does not meet [the requirements to use `Environments`](https://docs.github.com/en/actions/deployment/targeting-different-environments/using-environments-for-deployment), the `Environments` section will not be available.
+Deployments will still work, but they will not pause for manual approval and will automatically deploy the stable version directly after the prerelease version is published.
+You will instead need to add [the Manual Workflow Approval action](https://github.com/marketplace/actions/manual-workflow-approval) to [the deployment workflow](/.github/workflows/build-test-and-deploy-powershell-module.yml) to block deployments until they are approved.
+
+Finally, we will need to grant GitHub Actions permission to add git tags to the repository so it can keep track of the version number:
+
+1. You should still be in the `Settings` section of your repository.
+1. In the left-hand menu, in the `Code and automation` section, click on `Actions` and select `General`.
+1. Scroll down to `Workflow permissions` and ensure `Read and write permissions` is selected.
+1. Click the `Save` button.
+
+If you do not do this you will get the following error in the `Set the new version tag` step of the deployment workflow:
+
+```text
+fatal: unable to access 'https://github.com/<Author>/<Repo>/': The requested URL returned error: 403
+```
+
+</details>
+
+<details>
+<summary>Click to see Azure DevOps setup instructions...</summary>
+
+Coming soon.
+
+</details>
+
+### ✔ Step 5: Review and update boilerplate repo files
+
+The following boilerplate git repository files should be reviewed and updated or removed as needed.
+
+- [dumPS.psd1](/src/dumPS/dumPS.psd1): Update the module manifest with your module's information.
+- [Changelog](/Changelog.md): If you don't plan to track a changelog, remove this file and it's reference from the ReadMe.
+- [License](/License.md): Update to match your module's license, and ensure it uses the correct name and year in the copyright.
+- [Contributing](/docs/Contributing.md): Update to match your module's contributing guidelines, or remove it.
+- [bug_report](/.github/ISSUE_TEMPLATE/bug_report.md), [feature_request](/.github/ISSUE_TEMPLATE/feature_request.md), [pull_request_template](/.github/pull_request_template.md): Update these GitHub templates as needed to meet your requirements, or remove them.
+- Build and deployment workflows: The workflows include extra steps that you may not want, such as spell check, code coverage, etc.
+  Review the workflows and remove any steps that you don't want to include in your CI/CD pipeline.
+- [ReadMe](/ReadMe.md): Update this file with your module's information.
+  Some example template content is provided below; fill it out, or remove it and write your own.
+
+> [!IMPORTANT]
+> If you've made it this far, your repository is now ready for use! 🎉
+> You may delete this and all of the content above and commit any changes you've made.
+
+# dumPS PowerShell Module
+
+## 💬 Description
+
+A short description of what this project does.
+
+## ❓ Why this exists
+
+A short description of why this project exists.
+What use-case is it meant to solve?
 
 ## ✨ Features
 
-Use this repo template or module for your new git repository to get the following features out-of-the-box:
+List the features of this project:
 
-- GitHub Actions workflows or Azure DevOps Pipelines YAML files that:
-  - Publish a prerelease version on every commit to the `main` branch, and a stable version once manually approved.
-    - Can also manually trigger deployments of feature branches.
-  - Version the module.
-  - Run PSScriptAnalyzer to ensure best practices are followed.
-  - Run build tests, and smoke tests on multiple platforms (Windows, Linux, MacOS).
-  - Publish the module to the PowerShell Gallery or a custom feed.
-  - Spell check all files in the repository.
-  - Display test code coverage results on PRs.
-- Visual Studio Code tasks to easily run Pester tests and PSScriptAnalyzer locally.
-- A `.devcontainer` for use with Visual Studio Code's [Dev Containers extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) and [GitHub Codespaces](https://github.com/features/codespaces).
-- Boilerplate repository files, such as ReadMe, License, Changelog, .gitignore, .editorconfig, PR and Issue templates, and more.
+- Feature 1
+- Feature 2
 
-## 🚀 Get started
+## 🚀 Quick start
 
-There are two ways to create your new PowerShell module repository:
+A quick guide on how to get started with this module, including installation and usage:
 
-1. Use the `New-PowerShellScriptModuleRepository` cmdlet to create a new repository, or
-1. Create a new repository from this template in GitHub.
+- A link to the module in the PowerShell Gallery.
+- Code examples of installing and and using the module.
+- Links to wiki or other documentation.
 
-Both of these methods are described in more detail below.
+## ➕ How to contribute
 
-Once the repository is created, follow the instructions in the repo's ReadMe file to complete the setup.
-The non-transformed instructions can also be [viewed here](/src/ScriptModuleRepositoryTemplate/TemplateRepoFiles/ReadMe.md).
+Issues and Pull Requests are welcome.
+See [the Contributing page](docs/Contributing.md) for more details.
 
-### 📂 Method 1: Use the New-PowerShellScriptModuleRepository cmdlet
+## 📃 Changelog
 
-Step 1: Install the `ScriptModuleRepositoryTemplate` module [from the PowerShell Gallery](https://www.powershellgallery.com/packages/ScriptModuleRepositoryTemplate):
-
-```powershell
-Install-Module -Name ScriptModuleRepositoryTemplate -Scope CurrentUser
-```
-
-Step 2: Create the new repository files:
-
-```powershell
-New-PowerShellScriptModuleRepository -RepositoryDirectoryPath 'C:\MyRepoName' -ModuleName 'MyModuleName' -OrganizationName 'My Name'
-```
-
-The above command will create a new directory at `C:\MyRepoName` with the boilerplate files and workflows for publishing your module already set up.
-
-You can then perform a `git init` in that directory and push it to where you want your git repository hosted (e.g. Azure DevOps or GitHub).
-
-To complete the setup, follow the instructions in the module repo's ReadMe file.
-
-### 📄 Method 2: Create repository from GitHub template
-
-If your repository will be hosted on GitHub, you can follow the steps below:
-
-#### 🗍 Step 1: Create a new repo from this template
-
-The official docs for creating a new repository from a template can [be found here](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template).
-In short, the steps are:
-
-1. Click the `Use this template` button at the top of the repository and choose `Create a new repository`.
-1. Name your new repository (including your module's name is a good idea) and give it a description.
-1. Click the `Create repository` button.
-1. You should now have the new repository in your account with the name you chose.
-1. Clone your new repository to your local machine to start making changes to it.
-
-#### 🤖 Step 2: Replace repo template information
-
-Run the [_InitializeRepository.ps1](/_InitializeRepository.ps1) script to update the repository files with your module's information.
-You will be prompted to enter some information, such as:
-
-- Your module's name (no spaces)
-- Your name or organization name (may contain spaces)
-
-Once the script completes, most of the repo files will be replaced.
-You should commit the changes.
-
-To complete the setup, follow the instructions in the repo's new ReadMe file (that replaced this one).
-
-## 📋 Create your own template (optional)
-
-Not happy with some of the default template configurations?
-Maybe you don't like the .editorconfig settings, or want it to publish to your own internal PowerShell Gallery feed by default?
-You can derive your own template from this repository and use it for your future modules, minimizing the custom changes you need to make every time you create a new repo.
-
-To create your own template:
-
-1. Fork [this repository on GitHub](https://github.com/deadlydog/PowerShell.ScriptModuleRepositoryTemplate).
-1. In GitHub, from your repo's `Settings` tab under the `General` section, rename the repository to reflect that it is a template and check the box to make it a `Template repository`.
-1. Modify [the template repo files](/src/ScriptModuleRepositoryTemplate/TemplateRepoFiles/) with whatever customizations you want.
-1. If you are introducing more replacement tokens in the files, you will need to update the `Set-TemplateTokenValuesInAllRepositoryFiles` function in the [ScriptModuleRepositoryTemplate.psm1](/src/ScriptModuleRepositoryTemplate/ScriptModuleRepositoryTemplate.psm1) file to handle them.
-
-You can now create new repositories from your GitHub template in the same way you would use this one.
-
-If you want to be able to create new repositories from a module, you will need to publish your module under a different name.
-
-## ❤ Donate to support this template (optional)
-
-Buy me a hot apple cider for providing this template open source and for free 🙂
-
-[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=5MWSTSXNYEJWW)
-
-## TODO
-
-Things to still do:
-
-- Allow using a custom PowerShell Gallery feed URL.
-- Create new deployment on tag creation maybe.
-- Prompt user for module name, org name, pipelines or actions, PowerShell gallery or custom feed with an option to leave it blank to fill it in later.
-- Make azure DevOps and GitHub steps in the ReadMe collapsible.
-  Have screenshots and link to recording of the setup in both, since they involve clicking around in the UI.
-  Perhaps link to [this tutorial](https://dev.to/olalekan_oladiran_d74b7a6/how-to-enable-continuous-integration-with-azure-pipelines-1doi)?
-- In the ReadMe setup instructions or above, have a sentence or two explaining the layout of the ReadMe, or maybe a table of contents
-- Add some badges as well to the ReadMe.
-- To prevent having to store CI/CD manual setup images in the repo, maybe have them as an external link to a GitHub branch.
-  - Also create videos showing how to do the setup.
-- Maybe show instructions for setting up GitHub / Azure DevOps CI/CD during the initialization script. Or mention to follow the ReadMe instructions.
+See what's changed in the application over time by viewing [the changelog](Changelog.md).

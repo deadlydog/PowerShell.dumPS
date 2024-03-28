@@ -5,33 +5,18 @@
 # To run these tests on your local machine, see the comments in the BeforeAll block.
 
 BeforeAll {
-	Import-Module -Name 'ScriptModuleRepositoryTemplate' -Force
+	Import-Module -Name 'dumPS' -Force
 
 	# To run these tests on your local machine, comment out the Import-Module command above and uncomment the one below.
 	# 	Do this to use the module version from source code, not the installed version.
 	# 	This is necessary to test functionality that you've added to the module, but have not yet published and installed.
-	# Import-Module "$PSScriptRoot\..\src\ScriptModuleRepositoryTemplate" -Force
+	# Import-Module "$PSScriptRoot\..\src\dumPS" -Force
 }
 
-Describe 'New-PowerShellScriptModuleRepository' {
-	It 'Should create a new directory with the module repository files' {
-		# Arrange.
-		$repositoryDirectoryPath = "$TestDrive\NewModuleRepo"
-		$moduleName = 'NewModule'
-		$organizationName = 'My Organization'
-
-		$expectedModuleDirectoryPath = Join-Path -Path $repositoryDirectoryPath -ChildPath "src\$moduleName"
-		$expectedModuleFilePath = Join-Path -Path $expectedModuleDirectoryPath -ChildPath "$moduleName.psm1"
-		$expectedModuleManifestFilePath = Join-Path -Path $expectedModuleDirectoryPath -ChildPath "$moduleName.psd1"
-		$expectedModuleTestsFilePath = Join-Path -Path $expectedModuleDirectoryPath -ChildPath "$moduleName.Tests.ps1"
-
-		# Act.
-		New-PowerShellScriptModuleRepository -RepositoryDirectoryPath $repositoryDirectoryPath -ModuleName $moduleName -OrganizationName $organizationName
-
-		# Assert.
-		$expectedModuleDirectoryPath | Should -Exist
-		$expectedModuleFilePath | Should -Exist
-		$expectedModuleManifestFilePath | Should -Exist
-		$expectedModuleTestsFilePath | Should -Exist
+Describe 'Get-HelloWorld' {
+	It 'Should return "Hello, World!"' {
+		$expected = 'Hello, World!'
+		$result = Get-TemplateDescription
+		$result | Should -Be $expected
 	}
 }
