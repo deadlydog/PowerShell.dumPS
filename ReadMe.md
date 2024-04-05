@@ -1,3 +1,23 @@
+<p align="center">
+  <a href="https://github.com/deadlydog/PowerShell.dumPS/actions/workflows/build-and-test-powershell-module.yml"><img alt="Build status" src="https://github.com/deadlydog/PowerShell.dumPS/actions/workflows/build-and-test-powershell-module.yml/badge.svg"></a>
+  <a href="https://github.com/deadlydog/PowerShell.dumPS/actions/workflows/build-test-and-deploy-powershell-module.yml"><img alt="Deploy status" src="https://github.com/deadlydog/PowerShell.dumPS/actions/workflows/build-test-and-deploy-powershell-module.yml/badge.svg"></a>
+  <a href="https://github.com/deadlydog/PowerShell.dumPS/blob/main/License.md"><img alt="License" src="https://img.shields.io/github/license/deadlydog/PowerShell.dumPS.svg"></a>
+  <a href="https://github.com/deadlydog/PowerShell.dumPS/blob/main/docs/Contributing.md"><img alt="PRs welcome" src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg"></a>
+</p>
+
+<p align="center">
+  <a href="https://www.powershellgallery.com/packages/dumPS"><img alt="Stable PowerShell module version" src="https://img.shields.io/powershellgallery/v/dumPS.svg"></a>
+  <a href="https://www.powershellgallery.com/packages/dumPS"><img alt="Prerelease PowerShell module version" src="https://img.shields.io/powershellgallery/vpre/dumPS.svg?include_prereleases&label=powershell%20gallery%20prerelease&colorB=yellow"></a>
+  <a href="https://www.powershellgallery.com/packages/dumPS"><img src="https://img.shields.io/powershellgallery/dt/dumPS.svg"></a>
+</p>
+
+<p align="center">
+  <!-- Must add 'Windows', 'MacOS', and 'Linux' to the module manifest tags for them to show up on the Platforms badge. -->
+  <img src="https://img.shields.io/powershellgallery/p/dumPS.svg">
+  <img src="https://img.shields.io/github/languages/top/deadlydog/PowerShell.dumPS.svg">
+  <img src="https://img.shields.io/github/languages/code-size/deadlydog/PowerShell.dumPS.svg">
+</p>
+
 # dumPS PowerShell Module
 
 ## 💬 Description
@@ -44,7 +64,7 @@ $dan | Out-Dump
 
 ### Installation
 
-Install the module from the PowerShell Gallery:
+Install the module from [the PowerShell Gallery](https://www.powershellgallery.com/packages/dumPS):
 
 ```powershell
 Install-Module -Name dumPS -Scope CurrentUser
