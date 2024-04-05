@@ -6,4 +6,4 @@ This page is a list of _notable_ changes made in each version.
 
 Features:
 
-- Initial release with `Out-Dumps` basic functionality.
+- Initial release with `Out-Dump` basic functionality.

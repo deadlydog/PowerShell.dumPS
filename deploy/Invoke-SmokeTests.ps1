@@ -13,7 +13,7 @@ BeforeAll {
 	# Import-Module "$PSScriptRoot\..\src\dumPS" -Force
 }
 
-Describe 'Using Out-Dumps' {
+Describe 'Using Out-Dump' {
 	It 'Should not return any output by default' {
 		$obj = @{
 			Name = 'Daniel Schroeder'
@@ -23,7 +23,7 @@ Describe 'Using Out-Dumps' {
 			}
 		}
 
-		$result = Out-Dumps -InputObject $obj
+		$result = Out-Dump -InputObject $obj
 		$result | Should -BeNull
 	}
 
@@ -36,7 +36,7 @@ Describe 'Using Out-Dumps' {
 			}
 		}
 
-		$result = Out-Dumps -InputObject $obj -PassThru
+		$result = Out-Dump -InputObject $obj -PassThru
 		$result | Should -Be $obj
 	}
 
@@ -62,7 +62,7 @@ Describe 'Using Out-Dumps' {
 			}
 		}
 
-		$obj | Out-Dumps | Should -BeNull
+		$obj | Out-Dump | Should -BeNull
 	}
 
 	It 'Should allow piping objects to it with the alias dumps' {
@@ -86,6 +86,6 @@ Describe 'Using Out-Dumps' {
 			}
 		}
 
-		$obj | Out-Dumps -PassThru | Should -Be $obj
+		$obj | Out-Dump -PassThru | Should -Be $obj
 	}
 }

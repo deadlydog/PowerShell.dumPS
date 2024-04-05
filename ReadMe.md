@@ -35,7 +35,7 @@ $dan = @{
   Likes = @('Programming', 'PowerShell', '.NET', 'Dogs')
 }
 
-$dan | Out-Dumps
+$dan | Out-Dump
 ```
 
 ![Example output of above dumps command](/docs/Images/dan-dumps-example.png)
@@ -56,7 +56,7 @@ Display all properties of an object using full cmdlet name:
 
 ```powershell
 $process = Get-Process | Select-Object -First 1
-Out-Dumps -InputObject $process
+Out-Dump -InputObject $process
 ```
 
 ---
@@ -65,7 +65,7 @@ Pipe an object to display all properties:
 
 ```powershell
 $process = Get-Process | Select-Object -First 1
-$process | Out-Dumps
+$process | Out-Dump
 ```
 
 ---
@@ -73,7 +73,7 @@ $process | Out-Dumps
 Display the object as part of a pipeline:
 
 ```powershell
-Get-Process | Select-Object -First 1 | Out-Dumps
+Get-Process | Select-Object -First 1 | Out-Dump
 ```
 
 ---
@@ -81,16 +81,18 @@ Get-Process | Select-Object -First 1 | Out-Dumps
 Use the `PassThru` parameter to display the object while still returning it to the pipeline:
 
 ```powershell
-$process = Get-Process | Select-Object -First 1 | Out-Dumps -PassThru
+$process = Get-Process | Select-Object -First 1 | Out-Dump -PassThru
 ```
 
 ---
 
-Use the `dumps` alias in place of `Out-Dumps`:
+Use the `dumps` alias in place of `Out-Dump`:
 
 ```powershell
 Get-Process | Select-Object -First 1 | dumps
 ```
+
+> Aside: The alias is `dumps` instead of `dump` to avoid conflicting with the unix `dump` command.
 
 ## ➕ How to contribute
 

@@ -4,7 +4,7 @@ if (-not ('Dumpify.DumpExtensions' -as [type])) {
 	Add-Type -Path $assemblyFilePath
 }
 
-function Out-Dumps {
+function Out-Dump {
 	[CmdletBinding()]
 	[Alias('dumps')]
 	Param (
