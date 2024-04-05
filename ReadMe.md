@@ -4,27 +4,93 @@
 
 ## 💬 Description
 
-A short description of what this project does.
+A PowerShell module that allows you to dump all of an object's properties, including nested objects, to the console in a nice, colourful, structured, and easy-to-read format.
 
 ## ❓ Why this exists
 
-A short description of why this project exists.
-What use-case is it meant to solve?
+When debugging PowerShell in Visual Studio Code you can use the Variables and Watch windows to drill into objects and see all of their property values.
+When experimenting in the terminal however, it is very difficult to see all nested properties of an object.
+You can pipe objects to `Select-Object *` to see all top-level property values, but this does not show nested properties.
+dumPS allows you to easily view all of an object's nested properties in the console in a nice, structured format.
 
 ## ✨ Features
 
 List the features of this project:
 
-- Feature 1
-- Feature 2
+- Easily view all properties and values of an object in the terminal, including nested objects.
+- `PassThru` parameter to still return the object being displayed.
+
+## Example
+
+The following code produces the output screenshot below:
+
+```powershell
+$dan = @{
+  Name = 'Daniel Schroeder'
+  Alias = 'deadlydog'
+  Address = @{
+    Province = 'Saskatchewan'
+    Country = 'Canada'
+  }
+  Likes = @('Programming', 'PowerShell', '.NET', 'Dogs')
+}
+
+$dan | Out-Dumps
+```
+
+[Example output of above dumps command](/docs/Images/dan-dumps-example.png)
 
 ## 🚀 Quick start
 
-A quick guide on how to get started with this module, including installation and usage:
+### Installation
 
-- A link to the module in the PowerShell Gallery.
-- Code examples of installing and and using the module.
-- Links to wiki or other documentation.
+Install the module from the PowerShell Gallery:
+
+```powershell
+Install-Module -Name dumPS -Scope CurrentUser
+```
+
+### Usage
+
+Display all properties of an object using full cmdlet name:
+
+```powershell
+$process = Get-Process | Select-Object -First 1
+Out-Dumps -InputObject $process
+```
+
+---
+
+Pipe an object to display all properties:
+
+```powershell
+$process = Get-Process | Select-Object -First 1
+$process | Out-Dumps
+```
+
+---
+
+Display the object as part of a pipeline:
+
+```powershell
+Get-Process | Select-Object -First 1 | Out-Dumps
+```
+
+---
+
+Use the PassThru parameter to display the object while still returning it to the pipeline:
+
+```powershell
+$process = Get-Process | Select-Object -First 1 | Out-Dumps -PassThru
+```
+
+---
+
+Use the `dumps` alias in place of `Out-Dumps`:
+
+```powershell
+Get-Process | Select-Object -First 1 | dumps
+```
 
 ## ➕ How to contribute
 
@@ -34,3 +100,8 @@ See [the Contributing page](docs/Contributing.md) for more details.
 ## 📃 Changelog
 
 See what's changed in the application over time by viewing [the changelog](Changelog.md).
+
+## Credit
+
+This module utilizes [Dumpify](https://github.com/MoaidHathot/Dumpify).
+The Dumpify library is doing all of the heavy lifting and I thank them for making this PowerShell module possible.

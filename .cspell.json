@@ -16,6 +16,7 @@
 		"Codespace", // GitHub Codespaces
 		"Codespaces", // GitHub Codespaces
 		"devcontainer", // VS Code devcontainer
+		"Dumpify", // Library name
 		"gittools", // GitHub action author
 		"Hmmss", // Time format
 		"jacoco", // Java code coverage
