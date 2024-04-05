@@ -15,9 +15,12 @@ function Out-Dump {
 		[switch] $PassThru
 	)
 
-	[Dumpify.DumpExtensions]::Dump[Object]($InputObject) > $null
+	Process {
+		# By default the Dump command also returns the $InputObject, so pipe it to $null to prevent that.
+		[Dumpify.DumpExtensions]::Dump[Object]($InputObject) > $null
 
-	if ($PassThru) {
-		$InputObject
+		if ($PassThru) {
+			$InputObject
+		}
 	}
 }
