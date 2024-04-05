@@ -24,6 +24,7 @@
 		"madrapps", // GitHub action author
 		"netstandard", // .NET Standard
 		"nunit", // .NET unit testing framework
+		"nupkg", // NuGet package
 		"pwsh" // PowerShell Core
 	]
 }
