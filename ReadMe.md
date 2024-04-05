@@ -78,7 +78,7 @@ Get-Process | Select-Object -First 1 | Out-Dumps
 
 ---
 
-Use the PassThru parameter to display the object while still returning it to the pipeline:
+Use the `PassThru` parameter to display the object while still returning it to the pipeline:
 
 ```powershell
 $process = Get-Process | Select-Object -First 1 | Out-Dumps -PassThru
