@@ -24,7 +24,7 @@
 
 A PowerShell module that allows you to dump all of an object's properties, including nested objects, to the console in a nice, colourful, structured, and easy-to-read format.
 
-Currently it only supports PowerShell v7.3+, but I plan to add support for PowerShell v5 in the near future.
+Currently dumPS only supports PowerShell v7.3+, but support for PowerShell v5 is planned for the near future.
 
 ## ❓ Why this exists
 
