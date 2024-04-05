@@ -38,7 +38,7 @@ $dan = @{
 $dan | Out-Dumps
 ```
 
-[Example output of above dumps command](/docs/Images/dan-dumps-example.png)
+![Example output of above dumps command](/docs/Images/dan-dumps-example.png)
 
 ## 🚀 Quick start
 
