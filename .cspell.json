@@ -11,6 +11,7 @@
 		"colourful"
 	],
 	"ignoreWords": [
+		"deadlydog" // GitHub username
 		"CICD", // Continuous Integration/Continuous Deployment
 		"CODEOWNERS", // GitHub CODEOWNERS
 		"Codespace", // GitHub Codespaces
