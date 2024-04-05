@@ -123,7 +123,13 @@ See [the Contributing page](docs/Contributing.md) for more details.
 
 See what's changed in the application over time by viewing [the changelog](Changelog.md).
 
-## Credit
+## 💳 Donate to support this project
+
+Buy me a toque for providing this PowerShell module open source and for free 🙂
+
+[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=3SK4ZB4WSSYP4)
+
+## ❤ Credit
 
 This module utilizes [Dumpify](https://github.com/MoaidHathot/Dumpify).
 The Dumpify library is doing all of the heavy lifting and I thank them for making this PowerShell module possible.
