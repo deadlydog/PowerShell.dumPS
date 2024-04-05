@@ -27,7 +27,9 @@
   Description = "Dump all of an object's properties, fields, and non-public members to the console in a nice structured and colourful way."
 
   # Minimum version of the PowerShell engine required by this module
-  # PowerShellVersion = ''
+  # Until we can figure out how to call the generic Dump method properly in PowerShell 5, require PowerShell 7 for now.
+  # https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_calling_generic_methods?view=powershell-7.4&viewFallbackFrom=powershell-5.1
+  PowerShellVersion = '7.3'
 
   # Name of the PowerShell host required by this module
   # PowerShellHostName = ''

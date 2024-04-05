@@ -98,49 +98,51 @@ jobs:
           Write-Output "Displaying the installed module version that was used for the smoke tests."
           Get-Module -Name '${{ needs.run-build-and-test.outputs.powerShellModuleName }}'
 
-  test-prerelease-module-in-windows-powershell:
-    needs: [run-build-and-test, publish-prerelease-module]
-    runs-on: windows-latest
-    steps:
-      - name: Display PowerShell version being used
-        shell: powershell
-        run: $PSVersionTable
+  # Disable until we can overcome PowerShell 5 generic method issue.
+  # test-prerelease-module-in-windows-powershell:
+  #   needs: [run-build-and-test, publish-prerelease-module]
+  #   runs-on: windows-latest
+  #   steps:
+  #     - name: Display PowerShell version being used
+  #       shell: powershell
+  #       run: $PSVersionTable
 
-      - name: Install prerelease module from PowerShell Gallery
-        shell: powershell
-        run: |
-          [string] $moduleName = '${{ needs.run-build-and-test.outputs.powerShellModuleName }}'
-          [string] $prereleaseVersionNumber = '${{ needs.run-build-and-test.outputs.prereleaseVersionNumber}}'
+  #     - name: Install prerelease module from PowerShell Gallery
+  #       shell: powershell
+  #       run: |
+  #         [string] $moduleName = '${{ needs.run-build-and-test.outputs.powerShellModuleName }}'
+  #         [string] $prereleaseVersionNumber = '${{ needs.run-build-and-test.outputs.prereleaseVersionNumber}}'
 
-          Write-Output "Installing the module '$moduleName' prerelease version '$prereleaseVersionNumber' from the PowerShell Gallery."
-          Install-Module -Name $moduleName -AllowPrerelease -RequiredVersion $prereleaseVersionNumber -Force -Scope CurrentUser -Repository PSGallery -ErrorAction Stop -Verbose
+  #         Write-Output "Installing the module '$moduleName' prerelease version '$prereleaseVersionNumber' from the PowerShell Gallery."
+  #         Install-Module -Name $moduleName -AllowPrerelease -RequiredVersion $prereleaseVersionNumber -Force -Scope CurrentUser -Repository PSGallery -ErrorAction Stop -Verbose
 
-      - name: Download deploy files artifact from triggered workflow
-        uses: actions/download-artifact@v4
-        with:
-          name: ${{ needs.run-build-and-test.outputs.deployFilesArtifactName}}
-          path: ${{ env.artifactsDirectoryPath }}
+  #     - name: Download deploy files artifact from triggered workflow
+  #       uses: actions/download-artifact@v4
+  #       with:
+  #         name: ${{ needs.run-build-and-test.outputs.deployFilesArtifactName}}
+  #         path: ${{ env.artifactsDirectoryPath }}
 
-      - name: Run smoke tests
-        shell: powershell
-        run: |
-          [string] $smokeTestsScriptPath = "$Env:artifactsDirectoryPath/Invoke-SmokeTests.ps1"
+  #     - name: Run smoke tests
+  #       shell: powershell
+  #       run: |
+  #         [string] $smokeTestsScriptPath = "$Env:artifactsDirectoryPath/Invoke-SmokeTests.ps1"
 
-          Write-Output "Running Pester smoke tests from file '$smokeTestsScriptPath'."
-          $pesterConfig = New-PesterConfiguration @{
-            Output = @{ Verbosity = 'Detailed' }
-            Run = @{
-              Path = $smokeTestsScriptPath
-              Throw = $true
-            }
-          }
-          Invoke-Pester -Configuration $pesterConfig
+  #         Write-Output "Running Pester smoke tests from file '$smokeTestsScriptPath'."
+  #         $pesterConfig = New-PesterConfiguration @{
+  #           Output = @{ Verbosity = 'Detailed' }
+  #           Run = @{
+  #             Path = $smokeTestsScriptPath
+  #             Throw = $true
+  #           }
+  #         }
+  #         Invoke-Pester -Configuration $pesterConfig
 
-          Write-Output "Displaying the installed module version that was used for the smoke tests."
-          Get-Module -Name '${{ needs.run-build-and-test.outputs.powerShellModuleName }}'
+  #         Write-Output "Displaying the installed module version that was used for the smoke tests."
+  #         Get-Module -Name '${{ needs.run-build-and-test.outputs.powerShellModuleName }}'
 
   publish-stable-module:
-    needs: [run-build-and-test, test-prerelease-module-in-pwsh, test-prerelease-module-in-windows-powershell]
+    # needs: [run-build-and-test, test-prerelease-module-in-pwsh, test-prerelease-module-in-windows-powershell]
+    needs: [run-build-and-test, test-prerelease-module-in-pwsh]
     runs-on: ubuntu-latest
     environment: production # Used for deployment approvals.
     steps:
@@ -205,43 +207,44 @@ jobs:
           Write-Output "Displaying the installed module version that was used for the smoke tests."
           Get-Module -Name '${{ needs.run-build-and-test.outputs.powerShellModuleName }}'
 
-  test-stable-module-in-windows-powershell:
-    needs: [run-build-and-test, publish-stable-module]
-    runs-on: windows-latest
-    steps:
-      - name: Display PowerShell version being used
-        shell: powershell
-        run: $PSVersionTable
+  # Disable until we can overcome PowerShell 5 generic method issue.
+  # test-stable-module-in-windows-powershell:
+  #   needs: [run-build-and-test, publish-stable-module]
+  #   runs-on: windows-latest
+  #   steps:
+  #     - name: Display PowerShell version being used
+  #       shell: powershell
+  #       run: $PSVersionTable
 
-      - name: Install stable module from PowerShell Gallery
-        shell: powershell
-        run: |
-          [string] $moduleName = '${{ needs.run-build-and-test.outputs.powerShellModuleName }}'
-          [string] $stableVersionNumber = '${{ needs.run-build-and-test.outputs.stableVersionNumber}}'
+  #     - name: Install stable module from PowerShell Gallery
+  #       shell: powershell
+  #       run: |
+  #         [string] $moduleName = '${{ needs.run-build-and-test.outputs.powerShellModuleName }}'
+  #         [string] $stableVersionNumber = '${{ needs.run-build-and-test.outputs.stableVersionNumber}}'
 
-          Write-Output "Installing the module '$moduleName' stable version '$stableVersionNumber' from the PowerShell Gallery."
-          Install-Module -Name $moduleName -RequiredVersion $stableVersionNumber -Force -Scope CurrentUser -Repository PSGallery -ErrorAction Stop -Verbose
+  #         Write-Output "Installing the module '$moduleName' stable version '$stableVersionNumber' from the PowerShell Gallery."
+  #         Install-Module -Name $moduleName -RequiredVersion $stableVersionNumber -Force -Scope CurrentUser -Repository PSGallery -ErrorAction Stop -Verbose
 
-      - name: Download deploy files artifact from triggered workflow
-        uses: actions/download-artifact@v4
-        with:
-          name: ${{ needs.run-build-and-test.outputs.deployFilesArtifactName}}
-          path: ${{ env.artifactsDirectoryPath }}
+  #     - name: Download deploy files artifact from triggered workflow
+  #       uses: actions/download-artifact@v4
+  #       with:
+  #         name: ${{ needs.run-build-and-test.outputs.deployFilesArtifactName}}
+  #         path: ${{ env.artifactsDirectoryPath }}
 
-      - name: Run smoke tests
-        shell: powershell
-        run: |
-          [string] $smokeTestsScriptPath = "$Env:artifactsDirectoryPath/Invoke-SmokeTests.ps1"
+  #     - name: Run smoke tests
+  #       shell: powershell
+  #       run: |
+  #         [string] $smokeTestsScriptPath = "$Env:artifactsDirectoryPath/Invoke-SmokeTests.ps1"
 
-          Write-Output "Running Pester smoke tests from file '$smokeTestsScriptPath'."
-          $pesterConfig = New-PesterConfiguration @{
-            Output = @{ Verbosity = 'Detailed' }
-            Run = @{
-              Path = $smokeTestsScriptPath
-              Throw = $true
-            }
-          }
-          Invoke-Pester -Configuration $pesterConfig
+  #         Write-Output "Running Pester smoke tests from file '$smokeTestsScriptPath'."
+  #         $pesterConfig = New-PesterConfiguration @{
+  #           Output = @{ Verbosity = 'Detailed' }
+  #           Run = @{
+  #             Path = $smokeTestsScriptPath
+  #             Throw = $true
+  #           }
+  #         }
+  #         Invoke-Pester -Configuration $pesterConfig
 
-          Write-Output "Displaying the installed module version that was used for the smoke tests."
-          Get-Module -Name '${{ needs.run-build-and-test.outputs.powerShellModuleName }}'
+  #         Write-Output "Displaying the installed module version that was used for the smoke tests."
+  #         Get-Module -Name '${{ needs.run-build-and-test.outputs.powerShellModuleName }}'
