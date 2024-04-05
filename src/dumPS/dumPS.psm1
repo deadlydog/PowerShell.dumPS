@@ -1,7 +1,9 @@
-# using assembly './Dumpify/Dumpify.dll'
 if (-not ('Dumpify.DumpExtensions' -as [type])) {
-	[string] $assemblyFilePath = Resolve-Path -Path "$PSScriptRoot/Dumpify/Dumpify.dll"
-	Add-Type -Path $assemblyFilePath
+	[string] $assemblyFilePath =
+		Get-ChildItem -Path "$PSScriptRoot/Dumpify" -Include "Dumpify.dll" -Recurse -Force |
+		Select-Object -First 1 -ExpandProperty FullName
+	[string] $resolvedAssemblyFilePath = Resolve-Path -Path $assemblyFilePath
+	Add-Type -Path $resolvedAssemblyFilePath
 }
 
 function Out-Dump {

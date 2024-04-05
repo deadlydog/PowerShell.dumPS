@@ -1,3 +1,8 @@
+# Allow committing the Dumpify library DLL files.
+*.dll
+!src/dumPS/Dumpify/**/netstandard2.0/Dumpify.dll
+!src/dumPS/Dumpify/**/netstandard2.0/Spectre.Console.dll
+
 # Created by https://www.toptal.com/developers/gitignore/api/powershell,visualstudiocode,visualstudio
 # Edit at https://www.toptal.com/developers/gitignore?templates=powershell,visualstudiocode,visualstudio
 
@@ -6,7 +11,7 @@
 *.zip
 
 # Exclude .NET assemblies from source
-*.dll
+# *.dll # Moved to top of file as it must come before other .dll entries to ignore.
 
 ### VisualStudioCode ###
 .vscode/*
