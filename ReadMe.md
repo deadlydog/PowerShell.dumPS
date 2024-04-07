@@ -23,6 +23,7 @@
 ## 💬 Description
 
 A PowerShell module that allows you to dump all of an object's properties, including nested objects, to the console in a nice, colourful, structured, and easy-to-read format.
+This enhances productivity in exploratory and debugging workflows in the terminal.
 
 Currently dumPS only supports PowerShell v7.3+, but support for PowerShell v5 is planned for the near future.
 
@@ -30,7 +31,7 @@ Currently dumPS only supports PowerShell v7.3+, but support for PowerShell v5 is
 
 When debugging PowerShell in Visual Studio Code you can use the Variables and Watch windows to drill into objects and see all of their property values.
 When experimenting in the terminal however, it is very difficult to see all nested properties of an object.
-You can pipe objects to `Select-Object *` to see all top-level property values, but this does not show nested properties.
+You can pipe objects to `Select-Object *` to see all top-level property values, but this does not show nested objects' properties.
 dumPS allows you to easily view all of an object's nested properties in the console in a nice, structured format.
 
 ## ✨ Features
