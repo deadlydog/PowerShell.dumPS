@@ -27,6 +27,8 @@ This enhances productivity in exploratory and debugging workflows in the termina
 
 Currently dumPS only supports PowerShell v7.3+, but support for PowerShell v5 is planned for the near future.
 
+If you enjoy this module, consider giving it a GitHub star ⭐ to show your support.
+
 ## ❓ Why this exists
 
 When debugging PowerShell in Visual Studio Code you can use the Variables and Watch windows to drill into objects and see all of their property values.
